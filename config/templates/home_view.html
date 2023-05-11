@@ -3,4 +3,10 @@
 {% block content %}
 <h1>{{title}} (id: {{id}})</h1>
 <p>{{content}}</p>
+<ul>
+    {% for qs in object_list %}
+    <li><a href="articles/{{qs.id}}/">{{qs.title}} {{qs.content}}</a></li>
+    {% endfor %}
+
+</ul>
 {% endblock content %}
