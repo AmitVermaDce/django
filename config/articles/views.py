@@ -18,6 +18,17 @@ def article_search(request):
     return render(request, "articles/search.html", context=context)
 
 
+def article_create_view(request):
+    context = {}
+    if request.method == 'POST':
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        article_obj = Article.objects.create(title=title, content = content)
+        context["object"] = article_obj
+        context['created'] = True    
+    return render(request, "articles/create.html", context=context)
+
+
 def article_home_view(request, id=None):
     article_obj = None
     if id is not None:
