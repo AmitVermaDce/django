@@ -3,7 +3,7 @@ from .models import Article
 
 # Create your views here.
 
-def article_search(request):
+def article_search_view(request):
     query_dict = request.GET
     try:
         query = int(query_dict.get("query"))
@@ -29,7 +29,7 @@ def article_create_view(request):
     return render(request, "articles/create.html", context=context)
 
 
-def article_home_view(request, id=None):
+def article_detail_view(request, id=None):
     article_obj = None
     if id is not None:
         article_obj = Article.objects.get(id=id)
