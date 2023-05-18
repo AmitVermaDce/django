@@ -27,7 +27,7 @@ def article_detail_view(request, slug=None):
         article_obj = Article.objects.get(slug=slug)
         try:
             article_obj = Article.objects.get(slug=slug)
-        except Article.DoesNotExist:
+        except Article.DoesNotExist:    
             raise Http404
         except Article.MultipleObjectsReturned:
             raise Http404
