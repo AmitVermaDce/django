@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
@@ -32,7 +33,7 @@ def article_post_save(sender, instance, created, *args, **kwargs):
     print("post save")
     if created:
         print("......")
-        instance.slug = slugify("here new object created using post save signal")+f"_{digit}"
+        instance.slug = slugify("here new object created using post save signal")+f"-digit"
         instance.save()
 
 post_save.connect(article_post_save, sender=Article)

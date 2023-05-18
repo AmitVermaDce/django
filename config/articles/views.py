@@ -23,7 +23,7 @@ def article_search_view(request):
 
 def article_detail_view(request, slug=None):
     article_obj = None
-    if id is not None:
+    if slug is not None:
         try:
             article_obj = Article.objects.get(slug=slug)
         except Article.DoesNotExist:
@@ -32,11 +32,11 @@ def article_detail_view(request, slug=None):
             raise Http404
         except:
             raise Http404
-
     context = {
         "object": article_obj
     }
     return render(request, "articles/detail.html", context=context)
+
 
 
 @login_required
