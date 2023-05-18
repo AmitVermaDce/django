@@ -24,6 +24,7 @@ def article_search_view(request):
 def article_detail_view(request, slug=None):
     article_obj = None
     if slug is not None:
+        article_obj = Article.objects.get(slug=slug)
         try:
             article_obj = Article.objects.get(slug=slug)
         except Article.DoesNotExist:
