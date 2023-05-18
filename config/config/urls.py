@@ -32,7 +32,7 @@ urlpatterns = [
     path("", home_view),
     path("articles/", article_search_view, name="article-search"),
     path("articles/create/", article_create_view, name="article-create"),
-    path("articles/<int:id>/", article_detail_view, name="article-home"),
+    path("articles/<slug:slug>/", article_detail_view, name="article-home"),
     path('accounts/login/', login_view, name='login'),
     path('accounts/logout/', logout_view),
     path('accounts/register/', register_view),
