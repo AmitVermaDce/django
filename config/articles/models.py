@@ -21,15 +21,16 @@ class Article(models.Model):
 
 def article_pre_save(sender, instance, *args, **kwargs):
     print("pre save")
-    print(sender, instance)
-    if (instance.slug == None):
+    if instance.slug is None:
         instance.slug = slugify(instance.title)
-    print(args, kwargs)
 
 pre_save.connect(article_pre_save, sender=Article)
 
-def article_post_save(*args, **kwargs):
+def article_post_save(sender, instance, created, *args, **kwargs):
     print("post save")
-    print(args, kwargs)
+    if created:
+        print("......")
+        instance.slug = slugify("here new object created using post save signal")
+        instance.save()
 
 post_save.connect(article_post_save, sender=Article)
