@@ -18,13 +18,12 @@ class ArticleManager(models.Manager):
         return ArticleQuerySet(self.model, using=self._db)
     
     def search(self, query=None):
-        return self.get_queryset().search(query=query)
-
-          
+        return self.get_queryset().search(query=query)          
 
 
 # Create your models here.
 class Article(models.Model):
+    user = models.ForeignKey("auth.User", null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=50, blank=True, null=True, unique=True)
     content = models.TextField()    

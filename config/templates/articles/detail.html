@@ -2,5 +2,9 @@
 
 {% block content %}
 <h1>{{ object.title }} (slug: {{ object.get_absolute_url }})</h1>
+<p>{{ object.user }}</p>
+{% if request.user == object.user %}
+<p>This is also you</p>
+{% endif %}
 <p>{{ object.content }}</p>
 {% endblock content %}
