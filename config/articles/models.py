@@ -5,13 +5,22 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save, pre_save
 from django.db.models import Q
 
-class ArticleManager(models.Manager):
+class ArticleQuerySet(models.QuerySet):
     def search(self, query=None):
         if query is None or query =="":
-            return self.get_queryset().none()
+            return self.none()
         lookups = Q(title__icontains=query) | Q(content__icontains=query)
-        # return Article.objects.filter(lookups)
-        return self.get_queryset().filter(lookups)    
+        return self.filter(lookups)  
+        
+
+class ArticleManager(models.Manager):
+    def get_queryset(self):
+        return ArticleQuerySet(self.model, using=self._db)
+    
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
+
+          
 
 
 # Create your models here.
