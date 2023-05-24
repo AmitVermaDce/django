@@ -3,9 +3,16 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.db.models.signals import post_save, pre_save
-import random
+from django.db.models import Q
 
-digit = random.randint(1, 10000)
+class ArticleManager(models.Manager):
+    def search(self, query=None):
+        if query is None or query =="":
+            return self.get_queryset().none()
+        lookups = Q(title__icontains=query) | Q(content__icontains=query)
+        # return Article.objects.filter(lookups)
+        return self.get_queryset().filter(lookups)    
+
 
 # Create your models here.
 class Article(models.Model):
@@ -16,6 +23,8 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     # publish = models.DateField(auto_now=False, auto_now_add=False, default=timezone.now)
     publish = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
+
+    objects = ArticleManager()
 
     def get_absolute_url(self):
         return f'/articles/{self.slug}/'

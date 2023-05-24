@@ -3,16 +3,13 @@ from django.contrib.auth.decorators import login_required
 from .models import Article
 from articles.forms import ArticleForm
 from django.http import Http404
-from django.db.models import Q
+
 
 # Create your views here.
 
 def article_search_view(request):
-    query = request.GET.get('query')    
-    article_obj = Article.objects.all()    
-    if query is not None:
-        lookups = Q(title__icontains=query) | Q(content__icontains=query)
-        article_obj = Article.objects.filter(lookups)
+    query = request.GET.get('query')        
+    article_obj = Article.objects.search(query)
     context = {
         "object": article_obj
     }
