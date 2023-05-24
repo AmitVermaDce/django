@@ -1,9 +1,10 @@
-from typing import Iterable, Optional
+from django.conf import settings
 from django.db import models
-from django.utils import timezone
 from django.utils.text import slugify
 from django.db.models.signals import post_save, pre_save
 from django.db.models import Q
+
+User = settings.AUTH_USER_MODEL
 
 class ArticleQuerySet(models.QuerySet):
     def search(self, query=None):
@@ -23,7 +24,7 @@ class ArticleManager(models.Manager):
 
 # Create your models here.
 class Article(models.Model):
-    user = models.ForeignKey("auth.User", null=True, blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=50, blank=True, null=True, unique=True)
     content = models.TextField()    
