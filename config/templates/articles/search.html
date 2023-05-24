@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
-{% block content %}
-   
-    {% if object %}
-     <h1>{{object.title}}</h1>
-     <p>{{object.content}}</p>
-    {% endif %}
+{% block content %}  
+    
+<ol>
+    {% for each_object in object %}
+    {% if each_object.title %}
+    <li><a href="{{each_object.get_absolute_url }}" style="font-family: 'Courier New', Courier, monospace;">
+        {{ each_object.title }}</a></li>   
+     {% endif %}
+     {% endfor %}
+</ol>
+    
+
 {% endblock content %}
