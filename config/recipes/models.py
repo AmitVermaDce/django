@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from .validators import valid_unit_of_measure
 
 # Create your models here.
 '''
@@ -29,8 +30,8 @@ class RecipeIngredients(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE) 
     name = models.CharField(max_length=220)
     description = models.TextField(blank=True, null=True)
-    quantity = models.CharField(max_length=50)
-    unit = models.CharField(max_length=50)
+    quantity = models.CharField(max_length=50) # 1 1/4
+    unit = models.CharField(max_length=50, validators=[valid_unit_of_measure]) # pounds, ounce, lbs, gram, etc
     directions = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
